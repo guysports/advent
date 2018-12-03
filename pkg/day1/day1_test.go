@@ -59,14 +59,27 @@ func Test_ProcessInput(t *testing.T) {
 			name:  "Test valid input",
 			input: "+2,-1,+3,-2,+4,-3",
 			expected: Frequency{
-				freq: 3,
+				freq:       2,
+				historic:   []int{2, 1, 4, 2},
+				repeatFreq: 2,
 			},
 		},
 		{
 			name:  "Test input with invalid entry",
 			input: "+2,-1,+3,-2,2,+4,-3",
 			expected: Frequency{
-				freq: 3,
+				freq:       2,
+				historic:   []int{2, 1, 4, 2},
+				repeatFreq: 2,
+			},
+		},
+		{
+			name:  "Test input with find historic frequency repeat",
+			input: "+1,-1",
+			expected: Frequency{
+				freq:       1,
+				historic:   []int{1, 0, 1},
+				repeatFreq: 1,
 			},
 		},
 	}
@@ -75,7 +88,7 @@ func Test_ProcessInput(t *testing.T) {
 			frequency := Frequency{
 				freq: 0,
 			}
-			frequency.processFrequencyInput(tt.input)
+			frequency.ProcessFrequencyInput(tt.input)
 			assert.Equal(t, frequency, tt.expected)
 		})
 	}

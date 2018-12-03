@@ -9,7 +9,9 @@ import (
 type (
 	// Frequency - keep track of the frequency from the input
 	Frequency struct {
-		freq int
+		freq       int
+		historic   []int
+		repeatFreq int
 	}
 )
 
@@ -31,22 +33,41 @@ func validateInput(mod string) (int, error) {
 	return intmod, nil
 }
 
+// FindHistoric - Look for a repeat frequency when a new frequency number is added
+func (f *Frequency) FindHistoric() bool {
+	for _, oldHist := range f.historic {
+		if oldHist == f.freq {
+			f.repeatFreq = f.freq
+			return true
+		}
+	}
+	return false
+}
+
 // ProcessFrequencyInput - process the input string and determine frequency
 func (f *Frequency) ProcessFrequencyInput(input string) {
 
 	inputs := strings.Split(input, ",")
-	for _, input := range inputs {
-		freqMod, err := validateInput(input)
-		if err != nil {
-			// Ignore invalid entry
-			continue
+	found := false
+	for {
+		for _, input := range inputs {
+			freqMod, err := validateInput(input)
+			if err != nil {
+				// Ignore invalid entry
+				continue
+			}
+			f.freq += freqMod
+			found = f.FindHistoric()
+			f.historic = append(f.historic, f.freq)
+			if found {
+				return
+			}
 		}
-		f.freq += freqMod
 	}
-
 }
 
 // GetFrequency - Show the calculated frequency
 func (f *Frequency) GetFrequency() {
-	fmt.Printf("%d\n", f.freq)
+	fmt.Printf("Frequency is %d\n", f.freq)
+	fmt.Printf("Repeat Frequency is %d\n", f.repeatFreq)
 }
