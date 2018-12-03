@@ -48,5 +48,5 @@ func (f *Frequency) ProcessFrequencyInput(input string) {
 
 // GetFrequency - Show the calculated frequency
 func (f *Frequency) GetFrequency() {
-	fmt.Printf("The current frequency is %d", f.freq)
+	fmt.Printf("%d\n", f.freq)
 }

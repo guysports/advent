@@ -8,5 +8,7 @@ import (
 
 func main() {
 	input := os.Args[1]
-	day1.ProcessFrequencyInput(input)
+	frequency := day1.Frequency{}
+	frequency.ProcessFrequencyInput(input)
+	frequency.GetFrequency()
 }
