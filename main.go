@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/guysports/advent/pkg/day1"
 	"github.com/guysports/advent/pkg/day2"
+
+	"github.com/guysports/advent/pkg/day1"
 )
 
-func main_day1() {
+func mainday1() {
 	input := os.Args[1]
 	frequency := day1.Frequency{}
 	frequency.ProcessFrequencyInput(input)
@@ -35,6 +36,6 @@ func main() {
 	inputFile := os.Args[1]
 	keys, _ := readLines(inputFile)
 
-	checksum := day2.CreateCheckSum(keys)
+	checksum := day2.CreateChecksum(keys)
 	fmt.Printf("Checksum is %d\n", checksum)
 }

@@ -50,3 +50,25 @@ func CreateChecksum(keys []string) int {
 
 	return checksum
 }
+
+// FindBoxID - Find the strings that differ by a single character
+func FindBoxID(keys []string) string {
+	for pos, key := range keys {
+		// Test keys after key
+		for i := pos + 1; i < len(keys); i++ {
+			// Check key against laterkey
+			count := 0
+			different := 0
+			for j := 0; j < len(key); j++ {
+				if key[j] != keys[i][j] {
+					count++
+					different = j
+				}
+			}
+			if count == 1 {
+				return key[(different-1):] + key[:different]
+			}
+		}
+	}
+	return "nomatch"
+}
